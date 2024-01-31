@@ -5,75 +5,83 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Display</title>
+    <!-- Add Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     <style>
         body {
             text-align: center;
             background-color: #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        #left-image-container {
+            width: 30%;
+            transform: rotate(-5deg); /* Rotate the image slightly */
+            overflow: hidden;
+        }
+
+        #left-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         #data-container {
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
+            width: 60%;
+            margin-left: 20px;
+        }
+
+        .data-box {
+            margin-bottom: 20px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .date-box {
+            background-color: #ffcccb; /* Light red */
         }
 
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
+        .time-box {
+            background-color: #b3e0ff; /* Light blue */
         }
 
-        th {
-            background-color: #f2f2f2;
+        .meter-box {
+            background-color: #c2f0c2; /* Light green */
         }
 
-        .big-red {
-            font-size: 24px;
-            color: red;
+        .kwh-box {
+            background-color: #fcd5ce; /* Light orange */
         }
     </style>
 </head>
 <body>
-    <h1>Data Display</h1>
-    <div id="data-container" class="red"></div>
-    <a href="https://imgbb.com/"><img src="https://i.ibb.co/ZMbg56R/image.png" alt="image" border="0"></a>
+    <div id="left-image-container">
+        <a href="https://imgbb.com/"><img src="https://i.ibb.co/J3hLKbL/depositphotos-496163538-stock-illustration-poster-energy-saving-image-electric.webp" alt="depositphotos-496163538-stock-illustration-poster-energy-saving-image-electric" border="0"></a>
+    </div>
+
+    <div id="data-container">
+        <h1>Data Display</h1>
+        <!-- Add your data display code here -->
+        <div class="data-box date-box"></div>
+        <div class="data-box time-box"></div>
+        <div class="data-box meter-box"></div>
+        <div class="data-box kwh-box"></div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
             // Function to display data on the webpage
             function displayData(data) {
-                var dataContainer = $('#data-container');
-                dataContainer.empty(); // Clear previous data
-
-                // Create a table
-                var table = $('<table>');
-                var headerRow = $('<tr>');
-                // Assuming the first row contains headers
-                for (var key in data[0]) {
-                    headerRow.append($('<th>').text(key));
-                }
-                table.append(headerRow);
-
-                // Only display the last row (latest data)
-                var latestRow = data[data.length - 1];
-                var tableRow = $('<tr>');
-                for (var key in latestRow) {
-                    tableRow.append($('<td>').text(latestRow[key]));
-                }
-                table.append(tableRow);
-
-                // Append the table to the data container
-                dataContainer.append(table);
+                // Display each column in a separate box
+                $('.date-box').text('Date: ' + data[data.length - 1].ldate);
+                $('.time-box').text('Time: ' + data[data.length - 1].ltime);
+                $('.meter-box').text('Meter No: ' + data[data.length - 1].meterno);
+                $('.kwh-box').text('kWh: ' + data[data.length - 1].kwh);
             }
 
             // Function to fetch and display data
