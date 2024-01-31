@@ -11,20 +11,6 @@
             background-color: #f0f0f0;
         }
 
-        #top-image {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        #green-rectangle {
-            background-color: #4CAF50; /* Green color */
-            padding: 10px;
-            border-radius: 10px;
-            color: #fff; /* Text color for the green rectangle */
-            margin-bottom: 20px;
-        }
-
         #data-container {
             margin: 20px auto;
             padding: 20px;
@@ -57,15 +43,57 @@
     </style>
 </head>
 <body>
-    <a href="https://imgbb.com/"><img id="top-image" src="https://i.ibb.co/ZMbg56R/image.png" alt="image" border="0"></a>
     <h1>Data Display</h1>
-    <div id="green-rectangle">
-        <!-- Text or content for the green rectangle -->
-        This is a green rectangle.
-    </div>
     <div id="data-container" class="red"></div>
+    <a href="https://imgbb.com/"><img src="https://i.ibb.co/ZMbg56R/image.png" alt="image" border="0"></a>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Function to display data on the webpage
+            function displayData(data) {
+                var dataContainer = $('#data-container');
+                dataContainer.empty(); // Clear previous data
+
+                // Create a table
+                var table = $('<table>');
+                var headerRow = $('<tr>');
+                // Assuming the first row contains headers
+                for (var key in data[0]) {
+                    headerRow.append($('<th>').text(key));
+                }
+                table.append(headerRow);
+
+                // Only display the last row (latest data)
+                var latestRow = data[data.length - 1];
+                var tableRow = $('<tr>');
+                for (var key in latestRow) {
+                    tableRow.append($('<td>').text(latestRow[key]));
+                }
+                table.append(tableRow);
+
+                // Append the table to the data container
+                dataContainer.append(table);
+            }
+
+            // Function to fetch and display data
+            function fetchData() {
+                // Define the URL of your Google Apps Script web app for retrieving data
+                var googleAppsScriptUrl = 'https://script.google.com/macros/s/AKfycbx1udrb4mAbVCJD7rX_v0-W0am4NBFBOiqnHWkzn6m3Rklv_Fo8ebjQW3dLvjrHl3ejjw/exec';
+
+                // Fetch data from the Google Apps Script web app
+                $.getJSON(googleAppsScriptUrl, function (data) {
+                    // Display the data on the webpage
+                    displayData(data);
+                });
+            }
+
+            // Fetch and display data initially
+            fetchData();
+
+            // Set up a timer to fetch and display data every 5 seconds
+            setInterval(fetchData, 5000);
+        });
+    </script>
 </body>
 </html>
