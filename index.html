@@ -78,10 +78,10 @@
             // Function to display data on the webpage
             function displayData(data) {
                 // Display each column in a separate box
-                $('.date-box').text('Date: ' + data[data.length - 1].ldate);
-                $('.time-box').text('Time: ' + data[data.length - 1].ltime);
-                $('.meter-box').text('Meter No: ' + data[data.length - 1].meterno);
-                $('.kwh-box').text('kWh: ' + data[data.length - 1].kwh);
+                $('.date-box').text('VOLTAGE: ' + data[data.length - 1].ldate);
+                $('.time-box').text('CURRENT: ' + data[data.length - 1].ltime);
+                $('.meter-box').text('POWER: ' + data[data.length - 1].meterno);
+                $('.kwh-box').text('POWER FACTOR: ' + data[data.length - 1].kwh);
             }
 
             // Function to fetch and display data
